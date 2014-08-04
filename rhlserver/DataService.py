@@ -48,7 +48,6 @@ def getuser(userid):
     try:
         mysql_cursor = getDbConnection()
         args = 'SELECT `user_id`,`user_name`,`first_name`,`last_name`,`email`,`password`,`organization`,`enabled`,`phone` FROM `data`.`user` WHERE `user_id`=%s' % (userid)
-        # args = "CALL getUser('%s');" % (userid)
         mysql_cursor.execute(args)
         results=mysql_cursor.fetchall()
     except MySQLdb.Error, e:
@@ -73,7 +72,6 @@ def createUser():
     if name and firstname and password and email and phone :
         try:
             mysql_cursor = getDbConnection()
-            #args = "CALL createUser('%s','%s','%s','%s','%s');" % (name , userid , password , email , language)
             args = "INSERT INTO `data`.`user` (`user_name`,`first_name`,`last_name`,`email`,`password`,`organization`,`enabled`,`phone`) VALUES('%s','%s','%s','%s','%s','%s','%s','%s') ;" % (name , firstname, lastname , email, password, organization, enabled, phone)
             mysql_cursor.execute(args)
             mysql.commit();
@@ -104,7 +102,6 @@ def updateUser(userid):
     if name and firstname and password and email and phone :
         try:
             mysql_cursor = getDbConnection()
-            # args = "CALL updateUser('%s','%s','%s','%s','%s');" % (name , userid , password , email , language)
             args = "UPDATE `data`.`user` SET `user_name` = '%s', `first_name` = '%s',`last_name` = '%s', `email` = '%s',`password` = '%s',`organization` = '%s', `enabled` = '%s', `phone` = '%s' WHERE `user_id` = '%s';" % (name , firstname, lastname , email, password, organization, enabled, phone, userid)
             mysql_cursor.execute(args)
             mysql.commit();
@@ -120,7 +117,7 @@ def updateUser(userid):
 
 
 # Curl testing command
-# curl -X DELETE  http://localhost:8080/users/testuser543fd-p
+# curl -X DELETE  http://localhost:8080/users/2
 @route('/users/:userid', method='DELETE')
 def deleteuser(userid):
     try:
